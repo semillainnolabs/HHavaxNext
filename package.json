@@ -4,15 +4,18 @@
   "private": true,
   "scripts": {
     "node:fork": "hardhat node --hostname 127.0.0.1 --port 8545",
-    "deploy:fork": "node scripts/deploy.js",
+    "deploy:fork": "hardhat run scripts/deploy.ts --network localhost",
     "start:web": "cd web && npm run dev",
     "dev": "concurrently \"npm:node:fork\" \"npm:start:web\""
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@types/node": "^25.4.0",
     "concurrently": "^8.2.0",
     "dotenv": "^16.3.1",
-    "hardhat": "^2.18.0"
+    "hardhat": "^2.18.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.3",

@@ -17,7 +17,7 @@ export default function VaultUI(){
 
  const [amount,setAmount] = useState("100")
 
- async function connect(){
+ async function deposit(){
 
   const provider = new ethers.BrowserProvider(window.ethereum)
 
@@ -43,6 +43,30 @@ export default function VaultUI(){
 
  }
 
+ async function withdraw(){
+
+  const provider = new ethers.BrowserProvider(window.ethereum)
+
+  const signer = await provider.getSigner()
+
+  const token = new ethers.Contract(
+   process.env.NEXT_PUBLIC_TOKEN,
+   ERC20,
+   signer
+  )
+
+  const vault = new ethers.Contract(
+   process.env.NEXT_PUBLIC_VAULT,
+   VAULT,
+   signer
+  )
+
+  const value = ethers.parseUnits(amount,6)
+
+  await vault.withdraw(value)
+
+ }
+
  return (
 
   <div style={{padding:40}}>
@@ -54,8 +78,12 @@ export default function VaultUI(){
     onChange={(e)=>setAmount(e.target.value)}
    />
 
-   <button onClick={connect}>
+   <button onClick={deposit}>
     Deposit
+   </button>
+
+   <button onClick={withdraw}>
+    Withdraw
    </button>
 
   </div>
