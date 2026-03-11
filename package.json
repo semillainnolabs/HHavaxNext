@@ -1,0 +1,21 @@
+{
+  "name": "avax-fork-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "node:fork": "hardhat node --hostname 127.0.0.1 --port 8545",
+    "deploy:fork": "node scripts/deploy.js",
+    "start:web": "cd web && npm run dev",
+    "dev": "concurrently \"npm:node:fork\" \"npm:start:web\""
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "concurrently": "^8.2.0",
+    "dotenv": "^16.3.1",
+    "hardhat": "^2.18.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3",
+    "ethers": "^6.9.0"
+  }
+}
