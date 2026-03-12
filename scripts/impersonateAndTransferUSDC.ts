@@ -23,7 +23,7 @@ async function main() {
   }*/
   const whale = WHALE_ADDR;
   const recipient = (await ethers.getSigners())[0].address;
-  const amountStr = "100"; // default 100 USDC
+  const amountStr = "1000"; // default 100 USDC
   const decimals = 6;
 
   console.log("Whale:", whale);

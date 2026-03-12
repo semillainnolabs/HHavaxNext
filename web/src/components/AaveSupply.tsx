@@ -4,8 +4,9 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 
-const POOL_ADDRESSES_PROVIDER = (process.env.NEXT_PUBLIC_AAVE_POOL_ADDRS_PROVIDER || "0x2f39d218133afab8f2b819b1066c7e434ad94e9e").toLowerCase();
+const POOL_ADDRESSES_PROVIDER = (process.env.NEXT_PUBLIC_AAVE_POOL_ADDRS_PROVIDER || "0xa97684ead0e402dC232d5A977953DF7ECBaB3CDb").toLowerCase();
 const USDC_ADDR = (process.env.NEXT_PUBLIC_USDC_ADDRESS || "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E").toLowerCase();
+const AUSDC_ADDR =(process.env.NEXT_PUBLIC_AAVE_AUSDC_ADDRESS || "0x625e7708f30ca75bfd92586e17077590c60eb4cd").toLowerCase();
 
 export default function AaveSupply() {
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
@@ -83,8 +84,12 @@ export default function AaveSupply() {
       const poolAddr = await resolvePoolAddress();
       const pool = new ethers.Contract(poolAddr, ["function withdraw(address,uint256,address) returns (uint256)"], signer);
       const usdc = new ethers.Contract(USDC_ADDR, ["function decimals() view returns (uint8)"], signer);
-      const decimals = Number(await usdc.decimals());
-      const amt = ethers.parseUnits(amount || "0", decimals);
+      const ausdc = new ethers.Contract(AUSDC_ADDR, ["function approve(address,uint256) returns (bool)", "function decimals() view returns (uint8)", "function balanceOf(address) view returns (uint256)"], signer);
+      //const decimals = Number(await usdc.decimals());
+      //const amt = ethers.parseUnits(amount || "0", decimals);
+      const ausdcBalance = await ausdc.balanceOf(signer.address);
+      const amt = ausdcBalance;
+      console.log("withdrawing ausdcBalance:",ausdcBalance);
 
       setStatus("Calling pool.withdraw(...)");
       const tx = await pool.withdraw(USDC_ADDR, amt, account);
