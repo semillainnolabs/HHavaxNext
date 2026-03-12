@@ -9,10 +9,22 @@ async function main(): Promise<void> {
 
     const tokenAddress = process.env.NEXT_PUBLIC_TOKEN as string
     const vaultAddress = process.env.NEXT_PUBLIC_VAULT as string
+    const USDC_ADDR = process.env.NEXT_PUBLIC_USDC_ADDRESS || "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+    const AUSDC_ADDR = process.env.NEXT_PUBLIC_AAVE_AUSDC_ADDRESS as string
 
     const token = await ethers.getContractAt(
         "MockERC20",
         tokenAddress
+    )
+
+    const usdc = await ethers.getContractAt(
+        "MockERC20",
+        USDC_ADDR
+    )
+
+    const ausdc = await ethers.getContractAt(
+        "MockERC20",
+        AUSDC_ADDR
     )
 
     const vault = await ethers.getContractAt(
@@ -24,9 +36,10 @@ async function main(): Promise<void> {
 
     const signers = await ethers.getSigners()
 
-    console.log("mockUSDC Balances\n")
-
     const balance = await token.balanceOf(vaultAddress)
+
+
+    console.log("Vault Balances\n")
 
     console.log(
         vaultAddress,
@@ -34,10 +47,27 @@ async function main(): Promise<void> {
         ethers.formatUnits(balance, decimals) + " mockUSDC"
     )
 
+
+    console.log("\nUSER Balances\n")
+
     for (const s of signers) {
 
         const balance = await token.balanceOf(s.address)
         const shares = await vault.balanceOf(s.address)
+        const usdcBalance = await usdc.balanceOf(s.address)
+        const ausdcBalance = await ausdc.balanceOf(s.address)
+
+        console.log(
+            s.address,
+            "→",
+            ethers.formatUnits(usdcBalance, decimals) + " realUSDC"
+        )
+
+        console.log(
+            s.address,
+            "→",
+            ethers.formatUnits(ausdcBalance, decimals) + " aaveUSDC"
+        )
 
         console.log(
             s.address,

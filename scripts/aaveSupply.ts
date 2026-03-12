@@ -17,8 +17,8 @@ const POOL_ADDRESSES_PROVIDER = process.env.NEXT_PUBLIC_AAVE_POOL_ADDRS_PROVIDER
 const USDC_ADDR = process.env.NEXT_PUBLIC_USDC_ADDRESS || "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E";
 
 async function main() {
-  const args = process.argv.slice(process.argv.indexOf("--") + 1);
-  const amountStr = args[0] || "100"; // default 100 USDC
+  //const args = process.argv.slice(process.argv.indexOf("--") + 1);
+  const amountStr = "100"; // default 100 USDC
 
   const signer = (await ethers.getSigners())[0];
   console.log("Using signer:", signer.address);

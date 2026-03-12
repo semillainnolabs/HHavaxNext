@@ -4,7 +4,7 @@
  * npx hardhat run scripts/impersonateAndTransferUSDC.ts --network localhost -- <amountDecimals>
  *
  * Example:
- * npx hardhat run scripts/impersonateAndTransferUSDC.ts --network localhost -- 1000
+ * npx hardhat run scripts/impersonateAndTransferUSDC.ts --network localhost -- 100
  */
 
 import hre from "hardhat";
@@ -17,13 +17,13 @@ const USDC_ADDR = process.env.NEXT_PUBLIC_USDC_ADDRESS || "0xB97EF9Ef8734C71904D
 const WHALE_ADDR = process.env.NEXT_PUBLIC_WHALE_ADDRESS || "0x45d3D68F14038099530b1C4448Db8Ecdd78179B1";
 
 async function main() {
-  const args = process.argv.slice(process.argv.indexOf("--") + 1);
+  //const args = process.argv.slice(process.argv.indexOf("--") + 1);
   /*if (args.length < 1) {
     throw new Error("Usage: [amount]");
   }*/
   const whale = WHALE_ADDR;
   const recipient = (await ethers.getSigners())[0].address;
-  const amountStr = args[0] || "1000"; // default 1000 USDC
+  const amountStr = "100"; // default 100 USDC
   const decimals = 6;
 
   console.log("Whale:", whale);
@@ -40,7 +40,7 @@ async function main() {
   const value = ethers.parseEther("5");
   await hre.network.provider.request({
     method: "hardhat_setBalance",
-    params: [whale, value.toHexString()],
+    params: [whale, ethers.toBeHex(value)],
   });
 
   // 3) get signer for whale
