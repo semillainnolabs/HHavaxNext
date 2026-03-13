@@ -8,7 +8,7 @@
  */
 
 import hre from "hardhat";
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 import * as dotenv from "dotenv";
 dotenv.config({ path: "./web/.env.local" });
 
@@ -17,6 +17,11 @@ const USDC_ADDR = process.env.NEXT_PUBLIC_USDC_ADDRESS || "0xB97EF9Ef8734C71904D
 const AUSDC_ADDR = process.env.NEXT_PUBLIC_AAVE_AUSDC_ADDRESS as string
 
 async function main() {
+  // Increase time 10 days
+  const secondsToIncrease = 10 * 24 * 60 * 60; // 1 year
+  await network.provider.send("evm_increaseTime", [secondsToIncrease]);
+  await network.provider.send("evm_mine"); // Mine a new block to apply the change
+
   //const args = process.argv.slice(process.argv.indexOf("--") + 1);
   let amountStr = "100"; // amount USDC to withdraw
 
@@ -51,7 +56,7 @@ async function main() {
   const ausdc = await ethers.getContractAt("MockERC20", AUSDC_ADDR);
   const ausdcBalance = await ausdc.balanceOf(signer.address);
   amount = ausdcBalance;
-  amountStr =  ethers.formatUnits(amount, decimals);
+  amountStr = ethers.formatUnits(amount, decimals);
   console.log(`Withdrawing ${amountStr} aUSDC (${amount} raw)...`);
 
   const tx = await pool.withdraw(USDC_ADDR, amount, signer.address);

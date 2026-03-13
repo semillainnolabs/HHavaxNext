@@ -6,7 +6,11 @@
     "node:fork": "hardhat node --hostname 127.0.0.1 --port 8545",
     "deploy:fork": "hardhat run scripts/deploy.ts --network localhost",
     "start:web": "cd web && npm run dev",
-    "dev": "concurrently \"npm:node:fork\" \"npm:start:web\""
+    "dev": "concurrently \"npm:node:fork\" \"npm:start:web\"",
+    "fork:setup": "hardhat run scripts/setupFork.ts --network localhost",
+    "aave:supply": "hardhat run scripts/aaveSupply.ts --network localhost",
+    "aave:withdraw": "hardhat run scripts/aaveWithdraw.ts --network localhost",
+    "balances": "hardhat run scripts/showBalances.ts --network localhost"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",

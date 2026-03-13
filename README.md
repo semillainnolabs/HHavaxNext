@@ -37,6 +37,10 @@ NEXT_PUBLIC_USDC_ADDRESS=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E
 npm run node:fork
 ```
 
+```bash
+npm run fork:setup
+```
+
 2. **(Optional)** Deploy your local contracts (if you still use them):
 
 ```bash

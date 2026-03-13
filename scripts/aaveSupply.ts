@@ -18,7 +18,7 @@ const USDC_ADDR = process.env.NEXT_PUBLIC_USDC_ADDRESS || "0xB97EF9Ef8734C71904D
 
 async function main() {
   //const args = process.argv.slice(process.argv.indexOf("--") + 1);
-  const amountStr = "100"; // default 100 USDC
+  const amountStr = "1000"; // default 100 USDC
 
   const signer = (await ethers.getSigners())[0];
   console.log("Using signer:", signer.address);

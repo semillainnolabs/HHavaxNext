@@ -12,10 +12,27 @@ async function main(): Promise<void> {
     const USDC_ADDR = process.env.NEXT_PUBLIC_USDC_ADDRESS || "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
     const AUSDC_ADDR = process.env.NEXT_PUBLIC_AAVE_AUSDC_ADDRESS as string
 
-    const token = await ethers.getContractAt(
+    /*const token = await ethers.getContractAt(
         "MockERC20",
         tokenAddress
     )
+
+    const vault = await ethers.getContractAt(
+        "SimpleVault",
+        vaultAddress
+    )
+
+    const balance = await token.balanceOf(vaultAddress)
+
+    console.log("Vault Balances\n")
+
+    console.log(
+        vaultAddress,
+        "→",
+        ethers.formatUnits(balance, decimals) + " mockUSDC"
+    )
+
+*/
 
     const usdc = await ethers.getContractAt(
         "MockERC20",
@@ -27,48 +44,17 @@ async function main(): Promise<void> {
         AUSDC_ADDR
     )
 
-    const vault = await ethers.getContractAt(
-        "SimpleVault",
-        vaultAddress
-    )
-
-    const decimals = await token.decimals()
+    
+    const decimals = await usdc.decimals()
 
     const signers = await ethers.getSigners()
-
-    const balance = await token.balanceOf(vaultAddress)
-
-
-    console.log("Vault Balances\n")
-
-    console.log(
-        vaultAddress,
-        "→",
-        ethers.formatUnits(balance, decimals) + " mockUSDC"
-    )
-
 
     console.log("\nUSER Balances\n")
 
     for (const s of signers) {
 
-        const balance = await token.balanceOf(s.address)
+        /*const balance = await token.balanceOf(s.address)
         const shares = await vault.balanceOf(s.address)
-        const usdcBalance = await usdc.balanceOf(s.address)
-        const ausdcBalance = await ausdc.balanceOf(s.address)
-
-        console.log(
-            s.address,
-            "→",
-            ethers.formatUnits(usdcBalance, decimals) + " realUSDC"
-        )
-
-        console.log(
-            s.address,
-            "→",
-            ethers.formatUnits(ausdcBalance, decimals) + " aaveUSDC"
-        )
-
         console.log(
             s.address,
             "→",
@@ -85,6 +71,21 @@ async function main(): Promise<void> {
             s.address,
             "→",
             shares + " raw vSHARE"
+        )*/
+
+        const usdcBalance = await usdc.balanceOf(s.address)
+        const ausdcBalance = await ausdc.balanceOf(s.address)
+
+        console.log(
+            s.address,
+            "→",
+            ethers.formatUnits(usdcBalance, decimals) + " realUSDC"
+        )
+
+        console.log(
+            s.address,
+            "→",
+            ethers.formatUnits(ausdcBalance, decimals) + " aaveUSDC"
         )
 
         break

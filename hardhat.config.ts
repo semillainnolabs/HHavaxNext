@@ -19,6 +19,9 @@ const config: HardhatUserConfig = {
       forking: {
         url: process.env.AVAX_MAINNET_FORK_URL!,
         blockNumber: 80216330
+      },
+      accounts: {
+        count: 20
       }
     }
   }
