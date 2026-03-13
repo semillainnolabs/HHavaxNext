@@ -10,6 +10,7 @@ async function main(): Promise<void> {
     const tokenAddress = process.env.NEXT_PUBLIC_TOKEN as string
     const vaultAddress = process.env.NEXT_PUBLIC_VAULT as string
     const USDC_ADDR = process.env.NEXT_PUBLIC_USDC_ADDRESS || "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+    const MXNB_ADDR = process.env.NEXT_PUBLIC_MXNB_ADDRESS || "0xF197FFC28c23E0309B5559e7a166f2c6164C80aA"
     const AUSDC_ADDR = process.env.NEXT_PUBLIC_AAVE_AUSDC_ADDRESS as string
 
     /*const token = await ethers.getContractAt(
@@ -44,7 +45,12 @@ async function main(): Promise<void> {
         AUSDC_ADDR
     )
 
-    
+    const mxnb = await ethers.getContractAt(
+        "MockERC20",
+        MXNB_ADDR
+    )
+
+
     const decimals = await usdc.decimals()
 
     const signers = await ethers.getSigners()
@@ -75,17 +81,24 @@ async function main(): Promise<void> {
 
         const usdcBalance = await usdc.balanceOf(s.address)
         const ausdcBalance = await ausdc.balanceOf(s.address)
+        const mxnbBalance = await mxnb.balanceOf(s.address)
 
         console.log(
             s.address,
             "→",
-            ethers.formatUnits(usdcBalance, decimals) + " realUSDC"
+            ethers.formatUnits(usdcBalance, decimals) + " USDC"
         )
 
         console.log(
             s.address,
             "→",
             ethers.formatUnits(ausdcBalance, decimals) + " aaveUSDC"
+        )
+
+        console.log(
+            s.address,
+            "→",
+            ethers.formatUnits(mxnbBalance, decimals) + " MXNB"
         )
 
         break

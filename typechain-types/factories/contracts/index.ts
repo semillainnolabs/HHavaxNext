@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { MockERC20__factory } from "./MockERC20__factory";
+export { MockOracle__factory } from "./MockOracle__factory";
 export { SimpleVault__factory } from "./SimpleVault__factory";

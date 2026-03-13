@@ -37,20 +37,30 @@ NEXT_PUBLIC_USDC_ADDRESS=0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E
 npm run node:fork
 ```
 
-```bash
-npm run fork:setup
-```
-
-2. **(Optional)** Deploy your local contracts (if you still use them):
+**Deploy local contracts**
 
 ```bash
 npx hardhat run scripts/deploy.ts --network localhost
 ```
 
+**Get USDC and MXNB**
+
+```bash
+npm run fork:setup
+```
+
+**Check Initial Balances** 
+
+```bash
+npm run balances
+```
+
+2. 
+
 3. **Running Morpho Borrow operations**
 
 ```bash
-npx hardhat run scripts/morpho/createOracle.ts --network localhost
+npx hardhat run scripts/morpho/deployOracle.ts --network localhost
 npx hardhat run scripts/morpho/createMarket.ts --network localhost
 npx hardhat run scripts/morpho/createVaultV2.ts --network localhost
 npx hardhat run scripts/morpho/earnFlow.ts --network localhost -- deposit 100

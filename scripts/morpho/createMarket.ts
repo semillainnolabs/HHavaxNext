@@ -10,13 +10,14 @@ async function main() {
   const [signer] = await ethers.getSigners();
   const morpho = new ethers.Contract(ADDRESSES.MORPHO, MORPHO_ABI, signer);
 
-  const oracle = env("MORPHO_ORACLE");
-  const lltv = ethers.parseUnits(env("MORPHO_LLTV", "0.80"), 18);
+  //const oracle = env("MORPHO_ORACLE");
+  // LLTV: 77% = 0.77 * 10^18
+  const lltv = ethers.parseEther("0.77");
 
   const marketParams = {
     loanToken: ADDRESSES.MXNB,
     collateralToken: ADDRESSES.USDC,
-    oracle,
+    oracle: ADDRESSES.ORACLE,
     irm: ADDRESSES.ADAPTIVE_CURVE_IRM,
     lltv,
   } as const;

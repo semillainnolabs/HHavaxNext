@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { MockERC20 } from "./MockERC20";
+export type { MockOracle } from "./MockOracle";
 export type { SimpleVault } from "./SimpleVault";

@@ -17,17 +17,18 @@ async function main() {
   const [signer] = await ethers.getSigners();
 
   const owner = signer.address;
-  const salt = env("VAULT_SALT", ethers.id("mxnb-vault-v2"));
-  const maxRate = ethers.parseUnits(env("VAULT_MAX_RATE", "1.0"), 18);
+  //const vaultSalt = ethers.id("MXNB_Vault_" + Date.now());
+  const salt = ethers.id("mxnb-vault-v2-" + Date.now());
+  const maxRate = ethers.parseEther("1.0");//ethers.parseUnits(env("VAULT_MAX_RATE", "1.0"), 18);
 
-  const oracle = env("MORPHO_ORACLE");
-  const lltv = ethers.parseUnits(env("MORPHO_LLTV", "0.80"), 18);
+  //const oracle = env("MORPHO_ORACLE");
+  const lltv = ethers.parseEther("0.77");
 
   const marketParams: MarketParams = {
-    loanToken: ADDRESSES.MXNB,
-    collateralToken: ADDRESSES.USDC,
-    oracle,
-    irm: ADDRESSES.ADAPTIVE_CURVE_IRM,
+    loanToken: ethers.getAddress(ADDRESSES.MXNB),
+    collateralToken: ethers.getAddress(ADDRESSES.USDC),
+    oracle: ethers.getAddress(ADDRESSES.ORACLE),
+    irm: ethers.getAddress(ADDRESSES.ADAPTIVE_CURVE_IRM),
     lltv,
   };
 
@@ -48,8 +49,8 @@ async function main() {
 
   const vault = new ethers.Contract(predictedVault, VAULT_V2_ABI, signer);
 
-  await (await vault.setName("MXNB Yield Vault")).wait();
-  await (await vault.setSymbol("yvMXNB")).wait();
+  await (await vault.setName("Rapiloans MXNB Vault")).wait();
+  await (await vault.setSymbol("rlvMXNB")).wait();
   await (await vault.setCurator(owner)).wait();
   await (await vault.setIsAllocator(owner, true)).wait();
 

@@ -16,21 +16,25 @@ contract MockOracle {
     /// @notice The fixed price returned by this oracle
     /// @dev Morpho requires price scaled by 1e36
     /// For our PoC: 1 USDC (6 decimals) = 17.6 MXNB (6 decimals)
-    /// So price = 17.6 * 10^36 = 176 * 1e35
-    uint256 private constant PRICE = 176 * 10**(6 - 6 + 35);
+    /// So price = 17.9 * 10^36 = 179 * 1e35
+    uint256 private PRICE = 179 * 10**(6 - 6 + 35);
+
+    function setPrice(uint256 p) external {
+        PRICE = p;
+    }
 
     /**
      * Formula for multi-decimal tokens:
      * price = price_in_usd * 10^(loan_decimals - collateral_decimals + 36)
      *
      * For decimals:
-     * price = 17.6 * 10^(6 - 6 + 36) = 176 * 1e35
+     * price = 17.9 * 10^(6 - 6 + 36) = 179 * 1e35
      */
-    function price() external pure returns (uint256) {
+    function price() external view returns (uint256) {
         return PRICE;
     }
 
-    function priceView() external pure returns (uint256) {
+    function priceView() external view returns (uint256) {
         return PRICE;
     }
 }
