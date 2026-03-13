@@ -47,7 +47,16 @@ npm run fork:setup
 npx hardhat run scripts/deploy.ts --network localhost
 ```
 
-3. **Impersonate a USDC whale and fund a local account** (pick a whale address that actually holds USDC on Avalanche mainnet — you can find top holders on Snowtrace):
+3. **Running Morpho operations**
+```bash
+npx hardhat run scripts/morpho/borrowFlow.ts --network localhost -- status
+npx hardhat run scripts/morpho/borrowFlow.ts --network localhost -- supply-collateral 1000
+npx hardhat run scripts/morpho/borrowFlow.ts --network localhost -- borrow 100
+npx hardhat run scripts/morpho/borrowFlow.ts --network localhost -- repay 100
+npx hardhat run scripts/morpho/borrowFlow.ts --network localhost -- withdraw-collateral 1000
+```
+
+**Impersonate a USDC whale and fund a local account** (pick a whale address that actually holds USDC on Avalanche mainnet — you can find top holders on Snowtrace):
 
 ```bash
 # Example (replace with a real whale address and recipient)
