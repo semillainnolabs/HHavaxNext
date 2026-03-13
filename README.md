@@ -47,7 +47,15 @@ npm run fork:setup
 npx hardhat run scripts/deploy.ts --network localhost
 ```
 
-3. **Running Morpho operations**
+3. **Running Morpho Borrow operations**
+
+```bash
+npx hardhat run scripts/morpho/createOracle.ts --network localhost
+npx hardhat run scripts/morpho/createMarket.ts --network localhost
+npx hardhat run scripts/morpho/createVaultV2.ts --network localhost
+npx hardhat run scripts/morpho/earnFlow.ts --network localhost -- deposit 100
+```
+
 ```bash
 npx hardhat run scripts/morpho/borrowFlow.ts --network localhost -- status
 npx hardhat run scripts/morpho/borrowFlow.ts --network localhost -- supply-collateral 1000
