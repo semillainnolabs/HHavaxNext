@@ -57,7 +57,7 @@ async function main(): Promise<void> {
 
   /*
   Write frontend env
-  */
+  
 
   const env = `
 NEXT_PUBLIC_RPC=http://127.0.0.1:8545
@@ -68,7 +68,7 @@ NEXT_PUBLIC_VAULT=${vaultAddress}
 
   fs.writeFileSync("./web/.env.local", env)
 
-  console.log("Frontend env updated")
+  console.log("Frontend env updated")*/
 
 }
 

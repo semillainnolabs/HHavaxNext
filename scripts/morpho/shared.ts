@@ -9,6 +9,7 @@ export const ADDRESSES = {
   ORACLE_FACTORY: "0xF0c1299D44b3803243d7c1eEC2042e9484Db13f2",
   ORACLE: "0x17f4B55A352Be71CC03856765Ad04147119Aa09B",
   MARKET_ID: "0xd6198907acdc7b7e54de4a60f0557ea49621a2252bc4f0fab1ecb4c727b9a81c",
+  LTV: 770000000000000000n,
 
   MXNB: "0xF197FFC28c23E0309B5559e7a166f2c6164C80aA",
   USDC: "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -75,6 +76,9 @@ export const VAULT_V2_ABI = [
   "function submit(bytes data)",
   "function revoke(bytes data)",
   "function setAdapterRegistry(address newAdapterRegistry)",
+  "function setReceiveSharesGate(address newReceiveSharesGate)",
+  "function setSendSharesGate(address newSendSharesGate)",
+  "function setReceiveAssetsGate(address newReceiveAssetsGate)",
   "function addAdapter(address account)",
   "function removeAdapter(address account)",
   "function increaseAbsoluteCap(bytes idData, uint256 newAbsoluteCap)",
