@@ -63,6 +63,7 @@ npm run balances
 npx hardhat run scripts/morpho/deployOracle.ts --network localhost
 npx hardhat run scripts/morpho/createMarket.ts --network localhost
 npx hardhat run scripts/morpho/createVaultV2.ts --network localhost
+npx hardhat run scripts/morpho/createVault.ts --network localhost
 npx hardhat run scripts/morpho/earnFlow.ts --network localhost -- deposit 100
 ```
 

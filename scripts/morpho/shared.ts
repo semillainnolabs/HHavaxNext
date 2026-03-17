@@ -7,8 +7,8 @@ export const ADDRESSES = {
   MORPHO: "0x895383274303AA19fe978AFB4Ac55C7f094f982C",
   ADAPTIVE_CURVE_IRM: "0xb6ac9477D574EE2a7BF32d2475b303fb70968AA4",
   ORACLE_FACTORY: "0xF0c1299D44b3803243d7c1eEC2042e9484Db13f2",
-  ORACLE: "0x17f4B55A352Be71CC03856765Ad04147119Aa09B",
-  MARKET_ID: "0xd6198907acdc7b7e54de4a60f0557ea49621a2252bc4f0fab1ecb4c727b9a81c",
+  ORACLE: "0x633a7eB9b8912b22f3616013F3153de687F96074",
+  MARKET_ID: "0x76e1193970d08491ac1a9d6ea05e2b4b7ad11a2eef5cd7ecf1b038f3a54a40ae",
   LTV: 770000000000000000n,
 
   MXNB: "0xF197FFC28c23E0309B5559e7a166f2c6164C80aA",
@@ -71,6 +71,7 @@ export const VAULT_V2_ABI = [
   "function setOwner(address newOwner)",
   "function setCurator(address newCurator)",
   "function setIsAllocator(address account, bool newIsAllocator)",
+  "function setIsSentinel(address account, bool newIsSentinel)",
   "function setName(string newName)",
   "function setSymbol(string newSymbol)",
   "function submit(bytes data)",
