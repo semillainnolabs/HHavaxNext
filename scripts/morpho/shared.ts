@@ -53,6 +53,7 @@ export const MORPHO_ABI = [
 
 export const VAULT_V2_FACTORY_ABI = [
   "function createVaultV2(address owner, address asset, bytes32 salt) returns (address newVaultV2)",
+  "function vaultV2(address owner, address asset, bytes32 salt) view returns (address)",
 ];
 
 export const ADAPTER_FACTORY_ABI = [

@@ -95,7 +95,7 @@ async function main() {
     signer
   );
 
-  const predictedVault = await vaultFactory.createVaultV2.staticCall(
+  let predictedVault = await vaultFactory.createVaultV2.staticCall(
     owner,
     ADDRESSES.MXNB,
     salt
@@ -103,6 +103,15 @@ async function main() {
 
   const vaultTx = await vaultFactory.createVaultV2(owner, ADDRESSES.MXNB, salt);
   await vaultTx.wait();
+  console.log("✓ VaultV2 deployed at:", predictedVault);
+
+  // Extract the vault address from the transaction logs
+  predictedVault = await vaultFactory.vaultV2(
+    signer.address,
+    ADDRESSES.MXNB,
+    salt
+  );
+
   console.log("✓ VaultV2 deployed at:", predictedVault);
 
   const vault = new ethers.Contract(predictedVault, VAULT_V2_ABI, signer);
@@ -170,7 +179,7 @@ async function main() {
   // ============================================================================
   // Phase 4.5: Validate contract implementation
   // ============================================================================
-  console.log("\n=== Phase 4.5: Validating VaultV2 contract ===");
+  /*console.log("\n=== Phase 4.5: Validating VaultV2 contract ===");
   try {
     // Check if functions exist in the interface
     const hasIncreaseAbsoluteCap = vault.interface.hasFunction("increaseAbsoluteCap");
@@ -197,7 +206,7 @@ async function main() {
     }
   } catch (err: any) {
     console.log("⚠ Contract validation failed:", err.message.substring(0, 80));
-  }
+  }*/
   try {
     // Mine some blocks
     const blocksToMine = 10;
@@ -225,14 +234,35 @@ async function main() {
   // Execute adapter-level cap configurations (unlimited)
   try {
     console.log("  Attempting: increaseAbsoluteCap with adapterIdData");
-    console.log("    Amount:", U128_MAX.toString());
-    console.log("    Data length:", adapterIdData.length, "bytes");
+    //console.log("    Amount:", U128_MAX.toString());
+    //console.log("    Data length:", adapterIdData.length, "bytes");
 
-    await (await vault.submit(vault.interface.encodeFunctionData("increaseAbsoluteCap", [adapterIdData, U128_MAX]))).wait();
-    await (await vault.submit(vault.interface.encodeFunctionData("increaseRelativeCap", [adapterIdData, ethers.parseEther("1")]))).wait();
+    //await (await vault.submit(vault.interface.encodeFunctionData("increaseAbsoluteCap", [adapterIdData, U128_MAX]))).wait();
+    //await (await vault.submit(vault.interface.encodeFunctionData("increaseRelativeCap", [adapterIdData, ethers.parseEther("1")]))).wait();
 
-    //await (await vault.increaseAbsoluteCap(adapterIdData, U128_MAX)).wait();
-    //await (await vault.increaseRelativeCap(adapterIdData, ethers.parseEther("1"))).wait();
+    // Set adapter-specific caps
+    const adapterIdData = ethers.AbiCoder.defaultAbiCoder().encode(
+        ["string", "address"],
+        ["this", predictedAdapter]
+    );
+
+    // Use type(uint128).max for absolute caps (maximum possible value)
+    const absoluteCapMax = (1n << 128n) - 1n;
+
+    console.log("Setting adapter absolute cap...");
+    await (await vault.increaseAbsoluteCap(adapterIdData, absoluteCapMax)).wait();
+    //let tx = await vault.increaseAbsoluteCap(adapterIdData, absoluteCapMax);
+    //await tx.wait();
+    console.log("✓ Adapter absolute cap set to max");
+
+    console.log("Setting adapter relative cap...");
+    await (await vault.increaseRelativeCap(adapterIdData, ethers.parseEther("1"))).wait();
+    //tx = await vault.increaseRelativeCap(adapterIdData, ethers.parseEther("1"));
+    //await tx.wait();
+    console.log("✓ Adapter relative cap set to 1.0");
+
+    
+    
     console.log("✓ Adapter-level caps configured (unlimited)");
   } catch (err: any) {
     const errorDetails = await captureDetailedError(err, "Cap configuration error:");
